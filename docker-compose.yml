@@ -98,7 +98,10 @@ services:
   nginx:
     image: nginx
     ports:
-     - "5001:80"
+      - "5001:80"
+      - "9090:9090"
+      - "9093:9093"
+      - "9091:9091"
     container_name: "nginx"
     networks:
      - monitor-net
