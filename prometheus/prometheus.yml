@@ -45,8 +45,8 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
-      - target_label: __address__
-        replacement: blackbox:9115
+      # - target_label: __address__
+      #   replacement: blackbox:9115
   - job_name: 'elasticsearch'
     static_configs:
       - targets: ['elasticsearch:9114']
