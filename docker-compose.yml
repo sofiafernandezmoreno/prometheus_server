@@ -95,15 +95,30 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  nginx:
-    image: nginx
+  elasticsearch_exporter:
+    image: justwatch/elasticsearch_exporter
+    command: 
+     - '--es.uri=http://elasticsearch:9200'
+    restart: unless-stopped
+    ports: 
+     - 9114
+
+  caddy:
+    image: stefanprodan/caddy
+    container_name: caddy
     ports:
-      - "5001:80"
+      - "3000:3000"
       - "9090:9090"
       - "9093:9093"
       - "9091:9091"
-    container_name: "nginx"
+      - "9114:9114"
+    volumes:
+      - ./caddy/:/etc/caddy/
+    environment:
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+    restart: unless-stopped
     networks:
-     - monitor-net
+      - monitor-net
     labels:
       org.label-schema.group: "monitoring"
